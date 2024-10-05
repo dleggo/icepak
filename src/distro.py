@@ -1,1 +1,1 @@
-src/distros/arch.py
+distros/arch.py
