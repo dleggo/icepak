@@ -12,12 +12,29 @@ import os
 import subprocess
 
 def run_cmd(cmd):
-    return subprocess.check_output(cmd, shell=True)
+    return bytes.decode(subprocess.check_output(cmd, shell=True), "utf-8")
 
 def list_pkg_files(pkgname):
-	l = run_cmd(f"pacman -Qql {pkgname}")
-	print(l)
+	l = run_cmd(f"pacman -Qql {pkgname}").split("\n")
+	return l
+
+def list_pkg_dirs(pkgname):
+	"""
+	Lists all folders that are owned by an installed package
+	Mabye needs a bit of clarifying... ;D
+	"""
+	l = list_pkg_files(pkgname)
+	d = [] # is the path a directory
+	for a in l:
+		assert os.path.exists(a), "Package file does not exist! Mabye your package is broken."
+		is_dir = os.path.isdir(a)
+		assert is_dir != None, "Error telling if path was a directory!"
+		d.append(is_dir)
+	r = []
+	for a,b in zip(l, d):
+		if b:
+			r.append(a)
 
 
 if __name__ == "__main__":
-	list_pkg_files("git")
+	print(list_pkg_files("git"))
