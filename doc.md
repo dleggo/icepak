@@ -65,3 +65,33 @@ Icepak fires up and begins setup
  - Icepak checks dependencies, and loads them in their respective location in the sandbox.
 
  - Icepak finalizes sandbox, and runs ```run.sh```
+
+For instance.
+
+#### Package A:
+```
+pkg-a
+|- 1.2.3
+	|- usr
+	|	|- bin
+	|		|- a.py
+	|- deps
+```
+with ```deps``` being
+```
+pkg-b==1.12
+```
+
+#### Package B:
+```
+pkg-b
+|- 4.5
+	...
+|- 1.2
+	|- usr
+	|	|- share
+	|		|- important-list.txt
+	|- bin
+		|- b.py
+
+```
