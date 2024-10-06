@@ -64,3 +64,4 @@ Icepak fires up and begins setup
 
  - Icepak checks dependencies, and loads them in their respective location in the sandbox.
 
+ - Icepak finalizes sandbox, and runs ```run.sh```
