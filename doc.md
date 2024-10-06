@@ -95,3 +95,5 @@ pkg-b
 		|- b.py
 
 ```
+
+When pkg-a is ran, pkg-b will be loaded in the pkg-a tree as follows
