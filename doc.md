@@ -34,15 +34,33 @@ listed in the format like
 dep1
 dep2
 dep3==1.2.3
+dep4==https://your/url/here/pkg.pak
 ```
 The ```dep``` file is not mandatory to exist.
 If dependencies are listed, for any givin dependency, icepak will attempt to install it in the following
 order.
 
- - Icepak repos. Icepak is planned to have a ***small*** repository of dependencies. Apps should not go in
-   the repos but dependencies like packages. For instance ```libjpg``` is an example of a dependency
+ - If a URL is specified, icepak will attempt to fetch it. If it is successfull icepak will install it in
+   the normal way. If it fails to retrieve it, then it will display an error message in the installation
+   wizard, explaining the problem, and suggesting to notify the application developer.
+
+ - Icepak repos. Icepak is planned to have a ***small*** repository of librarys. Apps should not go in
+   the repos but librarys. For instance ```libjpg``` is an example of a library
    ```abiword``` is an example of an app.
 
  - Distros package manager. Might not work this way on immutable systems, but if the distros repositorys
    contain the dependency then it would be installed, into its own seperate icepak.
+
+
+> Sidenote. Icepak is planned to have each .pak file distributed from the application developers
+> themselves. For migration purposes however, Icepak will have temporary repos with applications, until
+> it is maintained by the developers themselves. The project model of icepak is not to have repos, but to
+> have each .pak come from the developers, similar to how Mac OS and Windows do it.
+
+The package is installed in its enviroment. ```application/version```
+
+### User runs the application
+Icepak fires up and begins setup
+
+ - Icepak checks dependencies, and loads them in their respective location in the sandbox.
 
