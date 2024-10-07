@@ -5,15 +5,31 @@ File structure of package
 
 pkg
 |- run.sh
+|- pkginfo
+|- deps
 |- usr
-	|- bin
-		|- pkg
-	|- share
-		|- pkg
-			|- data
+|	|- bin
+|	|	|- pkg
+|	|- share
+|		|- pkg
+|			|- data
 |- var
 	|- lib
 		|- pkg
+```
+
+```run.sh``` is what starts the application. For compatability it is written in bash, though an
+application can include a shebang line to use a different interpreter. If it uses a different interpreter,
+then it should be specified in ```deps```
+
+```pkginfo``` is a definition for package info including
+
+```
+developer="Eric or Fooznoggle Enterprises"	(required)
+version="1.2.3"	(required)
+description="This is an example package
+the description can span multiple lines"
+
 ```
 
 ## How a package gets installed
@@ -79,21 +95,65 @@ pkg-a
 ```
 with ```deps``` being
 ```
-pkg-b==1.12
+pkg-b==1.2
 ```
 
 #### Package B:
 ```
 pkg-b
 |- 4.5
-	...
+|	...
 |- 1.2
 	|- usr
 	|	|- share
-	|		|- important-list.txt
+	|		|- pkg-b
+	|			|- important-list.txt
 	|- bin
 		|- b.py
 
 ```
 
+#### Both loaded
+
 When pkg-a is ran, pkg-b will be loaded in the pkg-a tree as follows
+(pkg-a and pkg-b files are marked)
+```
+/ (from both packages perspective)
+|- usr
+	|- bin
+	|	|- a.py
+	|	|- b.py
+	|- share
+		|- pkg-b
+			|- important-list.txt
+
+```
+
+All packages are loaded into a skeleton structure as follows
+
+```
+/
+|- usr
+|	|- bin
+|	|- etc
+|	|- share
+|	|- lib
+|	|- lib32
+|	|- lib64 -> lib
+|	|- libexec
+|	|- include
+|	|- src
+|	|- local
+|	|	|- bin
+|	|	|- etc
+|	|	|- games
+|	|	|- include
+|	|	|- lib
+|	|	|- man
+|	|	|- sbin
+|	|	|- share
+|	|	|- src
+|- bin -> usr/bin
+|- lib -> usr/lib
+|- lib64 -> usr/lib
+```
